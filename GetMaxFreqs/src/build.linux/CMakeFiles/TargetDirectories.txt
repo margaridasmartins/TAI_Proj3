@@ -1,0 +1,3 @@
+/media/guids/Hdd/TAI/GetMaxFreqs/src/build.linux/CMakeFiles/rebuild_cache.dir
+/media/guids/Hdd/TAI/GetMaxFreqs/src/build.linux/CMakeFiles/edit_cache.dir
+/media/guids/Hdd/TAI/GetMaxFreqs/src/build.linux/CMakeFiles/GetMaxFreqs.dir

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/media/guids/Hdd/TAI/GetMaxFreqs/src/GetMaxFreqs.cpp
+iostream
+-
+fstream
+-
+cstdio
+-
+cstring
+-
+algorithm
+-
+sndfile.hh
+-
+fftw3.h
+-
+
