@@ -43,7 +43,14 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    normalized_compression_distance(file_test, dp);
+    string best_choice[3];
+    string compressors[3] = {"gzip", "lzma", "bzip2"};
+
+    normalized_compression_distance(file_test, dp, best_choice);
+
+    for(int i=0; i<3; i++){
+        printf("%s: %s\n",best_choice[i].c_str(),compressors[i].c_str());
+    }
     
     return 0;
 }

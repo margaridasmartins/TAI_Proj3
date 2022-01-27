@@ -5,62 +5,95 @@
 #include <fstream>
 #include <dirent.h>
 #include <string.h>
+#include <algorithm>
 
-int gzip_compress(char *filename){
-    char command[30]="gzip -k -9 ";
-    printf("%s\n",filename);
-    system(strcat(command, filename));
-    char final_filename[50];
-    strcpy(final_filename, filename);
-    FILE *fp = fopen(strcat(final_filename, ".gz"), "rb");
-    fseek(fp,0,SEEK_END);
+using namespace std;
+
+int gzip_compress(char *filename)
+{
+    char command[80];
+    sprintf(command, "gzip -k -9 %s > ../compressed_files/%s.gz", filename, filename);
+    printf("%s\n", filename);
+    system(command);
+    char cmp_filename[50];
+    sprintf(cmp_filename,"../compressed_files/%s.gz", filename);
+    FILE *fp = fopen(cmp_filename, "rb");
+    fseek(fp, 0, SEEK_END);
     return ftell(fp);
 }
 
-int lzma_compress(char *filename){
-    char command[30]="lzma -k -9 ";
-    printf("%s\n",filename);
-    system(strcat(command, filename));
-    char final_filename[50];
-    strcpy(final_filename, filename);
-    FILE *fp = fopen(strcat(final_filename, ".lzma"), "rb");
-    fseek(fp,0,SEEK_END);
+int lzma_compress(char *filename)
+{
+    char command[80];
+    sprintf(command, "lzma -k -9 %s > ../compressed_files/%s.lzma", filename, filename);
+    printf("%s\n", filename);
+    system(command);
+    char cmp_filename[50];
+    sprintf(cmp_filename,"../compressed_files/%s.lzma", filename);
+    FILE *fp = fopen(cmp_filename, "rb");
+    fseek(fp, 0, SEEK_END);
     return ftell(fp);
 }
 
-int bzip2_compress(char *filename){
-    char command[30]="bzip2 -k -9 ";
-    printf("%s\n",filename);
-    system(strcat(command, filename));
-    char final_filename[50];
-    strcpy(final_filename, filename);
-    FILE *fp = fopen(strcat(final_filename, ".bz2"), "rb");
-    fseek(fp,0,SEEK_END);
+int bzip2_compress(char *filename)
+{
+    char command[80];
+    sprintf(command, "bzip2 -k -9 %s > ../compressed_files/%s.bz2", filename, filename);
+    printf("%s\n", filename);
+    system(command);
+    char cmp_filename[50];
+    sprintf(cmp_filename,"../compressed_files/%s.bz2", filename);
+    FILE *fp = fopen(cmp_filename, "rb");
+    fseek(fp, 0, SEEK_END);
     return ftell(fp);
 }
 
-int compress_solo(char *filename){
-    gzip_compress(filename);
-    lzma_compress(filename);
-    bzip2_compress(filename);
-    return 1;
+void compress_solo(char *filename, int *solo_array)
+{
+    solo_array[0] = gzip_compress(filename);
+    solo_array[1] = lzma_compress(filename);
+    solo_array[2] = bzip2_compress(filename);
 }
 
-int compress_cat(char *filename, char *file_db){
-    return 0;
+void compress_cat(char *filename, char *path, char *d_name, int *cat_array)
+{
+    char command[80];
+    char cat_files[30] = "../cat_files/";
+    sprintf(command, "cat %s %s > ../cat_files/%s", filename, strcat(path, d_name), d_name);
+    system(command);
+    compress_solo(strcat(cat_files, d_name), cat_array); 
 }
 
-
-int normalized_compression_distance(char *filename, DIR *path_dir){
-    char path[40]="../music_samples/";
+void normalized_compression_distance(char *filename, DIR *path_dir, string *best_choice)
+{
+    char path[40] = "../comp_samples/";
     struct dirent *entry;
+
+    int solo_test[3];
+    compress_solo(filename, solo_test);
+
+    int tmp_solo[3];
+    int tmp_cat[3];
+    int tmp_ncd[3];
+    int best_size[3];
 
     if ((path_dir = opendir(path)) == NULL)
         perror("opendir() error");
-    else {
-        while ((entry = readdir(path_dir)) != NULL){
-            int solo_db = compress_solo(strcat(path,entry->d_name));
-            int cat_db = compress_cat(filename,strcat(path,entry->d_name));
+    else
+    {
+        while ((entry = readdir(path_dir)) != NULL)
+        {
+            compress_solo(strcat(path, entry->d_name), tmp_solo);
+            compress_cat(filename, path, entry->d_name, tmp_cat);
+            for (int i = 0; i < 3; i++)
+            {
+                tmp_ncd[i] = (float)(tmp_cat[i] - min(solo_test[i], tmp_solo[i])) /
+                             (float)max(solo_test[i], tmp_solo[i]);
+                if (tmp_ncd[i]< best_size[i]){
+                    best_size[i] = tmp_ncd[i];
+                    best_choice[i] = entry->d_name;
+                }
+            }
         }
         closedir(path_dir);
     }
