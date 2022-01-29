@@ -36,7 +36,9 @@ int main(int argc, char *argv[])
     char* sub_str=strtok(argv[1],".");
 
     char file_test[100];
-    sprintf(file_test, "../%s.freqs", sub_str);
+    sprintf(file_test, "../comp_test/%s.freqs", sub_str);
+
+    printf("%s\n",file_test);
 
     DIR *dp;
     dp = opendir(models_dir);

@@ -12,11 +12,11 @@ using namespace std;
 int gzip_compress(char *filename)
 {
     char command[80];
-    sprintf(command, "gzip -k -9 %s > ../compressed_files/%s.gz", filename, filename);
-    printf("%s\n", filename);
+    sprintf(command, "gzip -k -c -9 %s > ../compressed_files/%s.gz", filename, filename+3);
+    printf("%s\n", command);
     system(command);
     char cmp_filename[50];
-    sprintf(cmp_filename,"../compressed_files/%s.gz", filename);
+    sprintf(cmp_filename,"../compressed_files/%s.gz", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
     return ftell(fp);
@@ -25,11 +25,11 @@ int gzip_compress(char *filename)
 int lzma_compress(char *filename)
 {
     char command[80];
-    sprintf(command, "lzma -k -9 %s > ../compressed_files/%s.lzma", filename, filename);
-    printf("%s\n", filename);
+    sprintf(command, "lzma -k -c -9 %s > ../compressed_files/%s.lzma", filename, filename+3);
+    printf("%s\n", command);
     system(command);
     char cmp_filename[50];
-    sprintf(cmp_filename,"../compressed_files/%s.lzma", filename);
+    sprintf(cmp_filename,"../compressed_files/%s.lzma", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
     return ftell(fp);
@@ -38,11 +38,11 @@ int lzma_compress(char *filename)
 int bzip2_compress(char *filename)
 {
     char command[80];
-    sprintf(command, "bzip2 -k -9 %s > ../compressed_files/%s.bz2", filename, filename);
-    printf("%s\n", filename);
+    sprintf(command, "bzip2 -k -c -9 %s > ../compressed_files/%s.bz2", filename, filename+3);
+    printf("%s\n", command);
     system(command);
     char cmp_filename[50];
-    sprintf(cmp_filename,"../compressed_files/%s.bz2", filename);
+    sprintf(cmp_filename,"../compressed_files/%s.bz2", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
     return ftell(fp);

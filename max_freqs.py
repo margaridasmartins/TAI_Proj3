@@ -10,8 +10,8 @@ def wav_signiture(f,filename):
     if dir:
         output=open("comp_samples/{}.freqs".format(split_filename[0]),'w+b')
     else:
-        output=open("{}.freqs".format(split_filename[0]),'w+b')
-    print("Getting {} frequency signiture".format(".".join(split_filename)))
+        output=open("../comp_test/{}.freqs".format(split_filename[0]),'w+b')
+    print("Getting {} frequency signature".format(".".join(split_filename)))
 
     Fs, data=read(f)
     sample_size=1024
