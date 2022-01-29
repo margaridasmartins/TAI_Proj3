@@ -57,3 +57,17 @@ int main(int argc, char *argv[])
     
     return 0;
 }
+
+// TODO: Opção de escolher apenas um conversor
+// Remover os ficheiro depois de comprimir
+// Tentar gravar a demo com musica live
+// Relatorio
+//   Overview
+//   Program Options
+//   Functions
+//   Results
+//      Amostrar plots de frequencia
+//      As mesmas amostras de som com ou sem ruido
+//      Testar para cada tipo de compressor diferente
+//      Testar para musicas que não estejam lá e ver se dá genero semelhante (pimba com pimba, metal com metal etc)
+//   Conclusion
