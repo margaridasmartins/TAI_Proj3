@@ -1,4 +1,4 @@
-#include "shazam.hpp"
+#include "musify.hpp"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,24 +16,27 @@ int main(int argc, char *argv[])
 
     string help_text =
       "Usage:\n"
-      "  ./shazam models_dir filename_t\n"
+      "  ./musify filename_t\n"
       "Required:\n"
-      "  models_dir     The name of the directory with the language models"
-      "  filename_t       The name of the file with the text under analysis\n"
+      "  filename_t       The name of the file under analysis\n"
       "Example:\n"
-      "  ./shazam ?? 2 0.5\n";
+      "  ./musify ??\n";
 
-    if (argc < 2) {
+    if (argc < 1) {
         printf("ERR: Incorrect number of arguments\n\n%s", help_text.c_str());
         exit(1);
     }
 
-    
-    char models_dir[100];
-    sprintf(models_dir, "../%s", argv[1]);
+    char models_dir[100]="../comp_samples";
+
+    char command[100];
+    sprintf(command,"python3 ../max_freqs.py -f ../%s",argv[1]);
+    system(command);
+
+    char* sub_str=strtok(argv[1],".");
 
     char file_test[100];
-    sprintf(file_test, "../%s", argv[2]);
+    sprintf(file_test, "../%s.freqs", sub_str);
 
     DIR *dp;
     dp = opendir(models_dir);
