@@ -58,7 +58,7 @@ void compress_solo(char *filename, int *solo_array)
 void compress_cat(char *filename, char *path, char *d_name, int *cat_array)
 {
     char command[80];
-    char cat_files[30] = "../cat_files/";
+    char cat_files[50] = "../cat_files/";
     sprintf(command, "cat %s %s > ../cat_files/%s", filename, strcat(path, d_name), d_name);
     system(command);
     compress_solo(strcat(cat_files, d_name), cat_array); 
