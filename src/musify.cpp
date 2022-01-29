@@ -38,8 +38,6 @@ int main(int argc, char *argv[])
     char file_test[100];
     sprintf(file_test, "../comp_test/%s.freqs", sub_str);
 
-    printf("%s\n",file_test);
-
     DIR *dp;
     dp = opendir(models_dir);
 
