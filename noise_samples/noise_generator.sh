@@ -6,7 +6,7 @@ if [ $# -eq 0 ]
     exit 1
 fi
 
-vol="$1" # 0.02 standard value
+vol="$1" # 0.1standard value
 
 FILES="../music_samples/*"
 for f in $FILES
