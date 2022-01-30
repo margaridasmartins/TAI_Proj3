@@ -85,4 +85,5 @@ if dir:
             wav_signiture(f,filename)
 else:
     split_filepath=filepath.split("/")
+    print(filepath)
     wav_signiture("/".join(split_filepath),split_filepath[-1])
