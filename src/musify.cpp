@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
       "  filename_t       The name of the file under analysis\n"
       "Options:\n"
       "  -c N       Compression level (1-9)\n"
-      "  -h         Help message"
+      "  -h         Help message\n"
       "Example:\n"
       "  ./musify ??\n";
 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
         switch(option){
             case 'h':
                 cout << help_text;
-                break;
+                exit(1);
             case 'c':
                 comp_lvl=stoi(optarg);
                 if(comp_lvl>9||comp_lvl<1){

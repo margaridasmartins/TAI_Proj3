@@ -15,7 +15,7 @@ def wav_signiture(f,filename):
     print("Getting {} frequency signature".format(".".join(split_filename)))
 
     Fs, data=read(f)
-    sample_size=2048
+    sample_size=1024
     dS_factor=round(sample_size/512)
     dS_data=[]
     N=round(len(data)/dS_factor)
@@ -53,26 +53,36 @@ def wav_signiture(f,filename):
 
 ###############################################################################
 
-help_message="max_freqs.py -f <filepath>\tFrequency signiture of file\n"
-dir=1
+help_message="max_freqs.py (-f <filepath>|-d <directory>)\tFrequency signiture of file\n"
+dir=2
+directory='music_samples'
 filepath=""
 
 try:
-    opts, args=getopt.getopt(sys.argv[1:],'hf:d',['numberChar='])
+    opts, args=getopt.getopt(sys.argv[1:],'hf:d:',['numberChar='])
 except getopt.GetOptError:
     print(help_message)
     sys.exit(2)
+
 for opt, arg in opts:
     if opt in ('-h'):
         print(help_message)    
         sys.exit(2)
     elif opt in ('-f'):
+        if dir!=2:
+            print("ERR: cannot receive parameters -f and -d simultaneously")
+            sys.exit(3)
         dir=0
         filepath=arg
+    elif opt in ('-d'):
+        if dir!=2:
+            print("ERR: cannot receive parameters -f and -d simultaneously")
+            sys.exit(3)
+        dir=1
+        directory=arg
 
 if dir:
     # assign directory
-    directory = 'music_samples'
     
     # iterate over files in that directory
     for filename in os.listdir(directory):
