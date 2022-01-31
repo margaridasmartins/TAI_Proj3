@@ -14,7 +14,7 @@ int gzip_compress(char *filename)
     char command[100];
     sprintf(command, "gzip -k -c -9 %s > ../compressed_files/%s.gz", filename, filename+3);
     system(command);
-    char cmp_filename[50];
+    char cmp_filename[100];
     sprintf(cmp_filename,"../compressed_files/%s.gz", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
@@ -26,7 +26,7 @@ int lzma_compress(char *filename)
     char command[100];
     sprintf(command, "lzma -k -c -9 %s > ../compressed_files/%s.lzma", filename, filename+3);
     system(command);
-    char cmp_filename[50];
+    char cmp_filename[100];
     sprintf(cmp_filename,"../compressed_files/%s.lzma", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
@@ -38,7 +38,7 @@ int bzip2_compress(char *filename)
     char command[100];
     sprintf(command, "bzip2 -k -c -9 %s > ../compressed_files/%s.bz2", filename, filename+3);
     system(command);
-    char cmp_filename[50];
+    char cmp_filename[100];
     sprintf(cmp_filename,"../compressed_files/%s.bz2", filename+3);
     FILE *fp = fopen(cmp_filename, "rb");
     fseek(fp, 0, SEEK_END);
@@ -85,6 +85,7 @@ void normalized_compression_distance(char *filename, DIR *path_dir, string *best
             if (entry->d_name[0] == '.') {
                 continue;
             }
+
             memset(path_copy,0,sizeof(path_copy));
             strcat(path_copy,path);
             compress_solo(strcat(path_copy, entry->d_name), tmp_solo);
