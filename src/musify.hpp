@@ -94,6 +94,7 @@ void normalized_compression_distance(char *filename, DIR *path_dir, string *best
             if (entry->d_name[0] == '.') {
                 continue;
             }
+
             memset(path_copy,0,sizeof(path_copy));
             strcat(path_copy,path);
             compress_solo(strcat(path_copy, entry->d_name), tmp_solo,comp_lvl,cmp_time);
