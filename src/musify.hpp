@@ -105,11 +105,14 @@ void normalized_compression_distance(char *filename, DIR *path_dir, string *best
             {
                 tmp_ncd[i] = (float)(tmp_cat[i] - min(solo_test[i], tmp_solo[i])) /
                              (float)max(solo_test[i], tmp_solo[i]);
+                printf("%2.6f %d %d %d",tmp_cat[i],tmp_ncd[i],solo_test[i],tmp_solo[i]);
                 if (tmp_ncd[i]< best_size[i]){
                     best_size[i] = tmp_ncd[i];
                     best_choice[i] = entry->d_name;
                 }
+                cout <<"\n";
             }
+           
         }
         closedir(path_dir);
     }
