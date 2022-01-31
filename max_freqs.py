@@ -1,4 +1,5 @@
 import os, getopt, sys
+from time import process_time_ns
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io.wavfile import read
@@ -14,10 +15,8 @@ def wav_signiture(f,filename):
     print("Getting {} frequency signature".format(".".join(split_filename)))
 
     Fs, data=read(f)
-    sample_size=1024
-    sample_interval=256
+    sample_size=2048
     dS_factor=round(sample_size/512)
-    dS_interval=round(sample_interval/dS_factor)
     dS_data=[]
     N=round(len(data)/dS_factor)
 
@@ -33,10 +32,7 @@ def wav_signiture(f,filename):
     #plt.ylabel('Amplitude')
     #plt.xlabel('Frequency [Hz]')
 
-    for s in range(0,N,512-dS_interval):
-        if s+512>=N/2:
-            break
-        #print(s,N)
+    for s in range(0,N,512-128):
         Y_k = np.fft.fft(dS_data[s:s+512])[0:int(256)]/512 # FFT function from numpy
         Pxx = np.abs(Y_k) # be sure to get rid of imaginary part
 
@@ -48,7 +44,8 @@ def wav_signiture(f,filename):
                 i=255
             output.write(int(i).to_bytes(1,'big'))
             
-
+        if len(dS_data[s::])<512:
+            break
         # plotting
         #plt.plot(f,Pxx,linewidth=5)
         #plt.show()
@@ -85,5 +82,4 @@ if dir:
             wav_signiture(f,filename)
 else:
     split_filepath=filepath.split("/")
-    print(filepath)
-    wav_signiture("/".join(split_filepath),split_filepath[-1])
+    wav_signiture(filepath,split_filepath[-1])
