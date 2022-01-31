@@ -16,6 +16,8 @@ def wav_signiture(f,filename):
 
     Fs, data=read(f)
     sample_size=1024
+    freq_count=5
+
     dS_factor=round(sample_size/512)
     dS_data=[]
     N=round(len(data)/dS_factor)
@@ -38,8 +40,8 @@ def wav_signiture(f,filename):
 
         f = Fs*np.arange((256))/526; # frequency vector
 
-        idx=np.argpartition(Pxx,5)
-        for i in idx[:4]:
+        idx=np.argpartition(Pxx,-freq_count)[-freq_count:]
+        for i in idx:
             if i>255:
                 i=255
             output.write(int(i).to_bytes(1,'big'))
