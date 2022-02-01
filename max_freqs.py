@@ -15,7 +15,7 @@ def wav_signiture(f,filename):
     print("Getting {} frequency signature".format(".".join(split_filename)))
 
     Fs, data=read(f)
-    sample_size=1024
+    sample_size=2048
     freq_count=5
 
     dS_factor=round(sample_size/512)
